@@ -38,6 +38,14 @@ class _MyHomePageState extends State<MyHomePage> {
     child: Icon(Icons.thumb_up,color: Colors.green,),
     )
   ];
+
+  List<String> question=[
+    "test1",
+    "test2",
+    "test3",
+    "test4"
+  ];
+  int questionnumber=0;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -51,14 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(flex:5,child: Column(children: [
             Image.asset("images/image-1.jpg"),
             const SizedBox(height: 20,),
-            const Text("test",textAlign: TextAlign.center,style: TextStyle(fontSize: 24.0),)
+             Text(question[questionnumber],textAlign: TextAlign.center,style: const TextStyle(fontSize: 24.0),)
           ],)
           ),
           Expanded(child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ElevatedButton(onPressed: (){
               setState(() {
-                answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_up,color: Colors.green,)));
+               questionnumber++;
               });
             },style: ElevatedButton.styleFrom(backgroundColor: Colors.green),child:const Text("Correct"),)
           ),),
