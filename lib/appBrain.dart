@@ -28,4 +28,16 @@ String ImageQuestion(){
 bool AnswerQuestion(){
   return _questiongroup[_numberQuestion].questionAnswer;
 }
+
+  bool isFinished() {
+    if (_numberQuestion >= _questiongroup.length - 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void reset() {
+    _numberQuestion = 0;
+  }
 }

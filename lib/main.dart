@@ -30,16 +30,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   appBrain appbrain= appBrain();
   List<Padding>  answerresult=[];
-
+  int rightAnswers=0;
   void changerText(bool check){
     setState(() {
        bool correctAnswer=appbrain.AnswerQuestion();
       if(correctAnswer==check){
+        rightAnswers++;
           answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_up,color: Colors.green,),));
       }else{
           answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_down,color: Colors.red,),));
       }
-      appbrain.nextQuestion();
+      
+      if(appbrain.isFinished()){
+          showDialog(context: context, builder: (BuildContext context){
+             return AlertDialog(
+                    title:Text("congrats"),
+                    content: Text("hdhdhd ${rightAnswers}"),
+                    actions: [Icon(Icons.close)],
+             );
+          });
+          rightAnswers=0;
+          appbrain.reset();
+          answerresult=[];
+      }else{
+        appbrain.nextQuestion();
+      }
     });
   }
 
