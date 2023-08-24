@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
   rflutter_alert: ^2.0.7
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:
