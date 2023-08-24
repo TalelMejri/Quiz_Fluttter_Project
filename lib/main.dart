@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'appBrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 //import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 void main(){
   runApp(const MyApp());
@@ -35,23 +36,30 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
        bool correctAnswer=appbrain.AnswerQuestion();
       if(correctAnswer==check){
-        rightAnswers++;
+          rightAnswers++;
           answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_up,color: Colors.green,),));
       }else{
           answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_down,color: Colors.red,),));
       }
-      
       if(appbrain.isFinished()){
-          showDialog(context: context, builder: (BuildContext context){
-             return AlertDialog(
-                    title:Text("congrats"),
-                    content: Text("hdhdhd ${rightAnswers}"),
-                    actions: [Icon(Icons.close)],
-             );
-          });
-          rightAnswers=0;
+          Alert(
+      context: context,
+      title: "Finished",
+      desc: "you answer $rightAnswers correct",
+      buttons: [
+        DialogButton(
+           onPressed: () => Navigator.pop(context),
+          width: 120,
+          child:  const Text(
+            "play again",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ],
+    ).show();
           appbrain.reset();
           answerresult=[];
+          rightAnswers=0;
       }else{
         appbrain.nextQuestion();
       }
