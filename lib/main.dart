@@ -27,7 +27,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  List<Padding>  answerresult=[
+    const Padding(padding: EdgeInsets.all(3),
+    child: Icon(Icons.thumb_up,color: Colors.green,),
+    ),
+    const  Padding(padding: EdgeInsets.all(3),
+    child: Icon(Icons.thumb_down,color: Colors.red,),
+    ),
+     const Padding(padding: EdgeInsets.all(3),
+    child: Icon(Icons.thumb_up,color: Colors.green,),
+    )
+  ];
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -37,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
          crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Row(children: answerresult,),
           Expanded(flex:5,child: Column(children: [
             Image.asset("images/image-1.jpg"),
             const SizedBox(height: 20,),
@@ -45,7 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Expanded(child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(backgroundColor: Colors.green),child:const Text("Correct"),)
+            child: ElevatedButton(onPressed: (){
+              setState(() {
+                answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_up,color: Colors.green,)));
+              });
+            },style: ElevatedButton.styleFrom(backgroundColor: Colors.green),child:const Text("Correct"),)
           ),),
             Expanded(child: Padding(
             padding:const EdgeInsets.symmetric(vertical: 10),
