@@ -1,6 +1,8 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'appBrain.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:confetti/confetti.dart';
 //import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 void main(){
   runApp(const MyApp());
@@ -31,6 +33,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   appBrain appbrain= appBrain();
   List<Padding>  answerresult=[];
+    late ConfettiController _centerController;
+      @override
+  void initState() {
+    super.initState();
+    _centerController =
+        ConfettiController(duration: const Duration(seconds: 5));
+  }
   int rightAnswers=0;
   void changerText(bool check){
     setState(() {
@@ -42,13 +51,18 @@ class _MyHomePageState extends State<MyHomePage> {
           answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_down,color: Colors.red,),));
       }
       if(appbrain.isFinished()){
+           if(rightAnswers>3){
+            _centerController.play();
+           }
+           Future.delayed(const Duration(seconds: 2),(){
+                 _centerController.stop(); 
           Alert(
       context: context,
       title: "Finished",
       desc: "you answer $rightAnswers correct",
       buttons: [
         DialogButton(
-           onPressed: () => Navigator.pop(context),
+           onPressed: (){_centerController.stop();Navigator.pop(context);},
           width: 120,
           child:  const Text(
             "play again",
@@ -57,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ],
     ).show();
+        });
           appbrain.reset();
           answerresult=[];
           rightAnswers=0;
@@ -99,6 +114,18 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
          crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+           Expanded(flex: 1,child:  Align(
+                alignment: Alignment.center,
+                child: ConfettiWidget(
+                  confettiController: _centerController,
+                  blastDirection: pi / 2,
+                  maxBlastForce: 5,
+                  minBlastForce: 1,
+                  emissionFrequency: 0.03,
+                  numberOfParticles: 10,
+                  gravity: 0,
+                ),
+              ),),
           Row(children: answerresult,),
           Expanded(flex:5,child: Column(children: [
             Image.asset(appbrain.ImageQuestion()),
