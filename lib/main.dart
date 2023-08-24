@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_flutter/Question.dart';
 //import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 void main(){
   runApp(const MyApp());
@@ -27,38 +28,37 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Padding>  answerresult=[
-    const Padding(padding: EdgeInsets.all(3),
-    child: Icon(Icons.thumb_up,color: Colors.green,),
-    ),
-    const  Padding(padding: EdgeInsets.all(3),
-    child: Icon(Icons.thumb_down,color: Colors.red,),
-    ),
-     const Padding(padding: EdgeInsets.all(3),
-    child: Icon(Icons.thumb_up,color: Colors.green,),
-    )
+
+  List<Padding>  answerresult=[];
+
+  // List<String> question=[
+  //   "test1",
+  //   "test2",
+  //   "test3",
+  //   "test4"
+  // ];
+
+  // List<bool> reponse=[
+  //   true,
+  //   false,
+  //   true,
+  //   true
+  // ];
+
+  // List <String> imagesanswers=[
+  //   "images/image-1.jpg",
+  //   "images/image-2.jpg",
+  //   "images/image-3.jpg",
+  //   "images/image-4.jpg"
+  // ];
+
+  List<Question> questiongroup=[
+    Question(q: "test",i: "images/image-1.jpg",a: true),
+    Question(q: "test2",i: "images/image-2.jpg",a: false),
+    Question(q: "test3",i: "images/image-3.jpg",a: true),
+    Question(q: "test4",i: "images/image-4.jpg",a: false)
   ];
 
-  List<String> question=[
-    "test1",
-    "test2",
-    "test3",
-    "test4"
-  ];
-
-  List<bool> reponse=[
-    true,
-    false,
-    true,
-    true
-  ];
-
-  List <String> imagesanswers=[
-    "images/image-1.jpg",
-    "images/image-2.jpg",
-    "images/image-3.jpg",
-    "images/image-4.jpg"
-  ];
   int questionnumber=0;
   @override
   Widget build(BuildContext context) {
@@ -71,15 +71,15 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Row(children: answerresult,),
           Expanded(flex:5,child: Column(children: [
-            Image.asset(imagesanswers[questionnumber]),
+            Image.asset(questiongroup[questionnumber].questionImage),
             const SizedBox(height: 20,),
-             Text(question[questionnumber],textAlign: TextAlign.center,style: const TextStyle(fontSize: 24.0),)
+             Text(questiongroup[questionnumber].questionText,textAlign: TextAlign.center,style: const TextStyle(fontSize: 24.0),)
           ],)
           ),
           Expanded(child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ElevatedButton(onPressed: (){
-              bool correctAnswer=reponse[questionnumber];
+              bool correctAnswer=questiongroup[questionnumber].questionAnswer;
               if(correctAnswer==true){
                 answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_up,color: Colors.green,),));
               }else{
@@ -93,12 +93,15 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(child: Padding(
             padding:const EdgeInsets.symmetric(vertical: 10),
             child: ElevatedButton(onPressed: (){
-                 bool correctAnswer=reponse[questionnumber];
+              bool correctAnswer=questiongroup[questionnumber].questionAnswer;
               if(correctAnswer==false){
                   answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_up,color: Colors.green,),));
               }else{
                   answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_down,color: Colors.red,),));
               }
+                setState(() {
+               questionnumber++;
+              });
             },style: ElevatedButton.styleFrom(backgroundColor: Colors.red),child: const Text("Incorrect"))
           ),)
         ],
