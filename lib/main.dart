@@ -45,6 +45,20 @@ class _MyHomePageState extends State<MyHomePage> {
     "test3",
     "test4"
   ];
+
+  List<bool> reponse=[
+    true,
+    false,
+    true,
+    true
+  ];
+
+  List <String> imagesanswers=[
+    "images/image-1.jpg",
+    "images/image-2.jpg",
+    "images/image-3.jpg",
+    "images/image-4.jpg"
+  ];
   int questionnumber=0;
   @override
   Widget build(BuildContext context) {
@@ -57,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Row(children: answerresult,),
           Expanded(flex:5,child: Column(children: [
-            Image.asset("images/image-1.jpg"),
+            Image.asset(imagesanswers[questionnumber]),
             const SizedBox(height: 20,),
              Text(question[questionnumber],textAlign: TextAlign.center,style: const TextStyle(fontSize: 24.0),)
           ],)
@@ -65,6 +79,12 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ElevatedButton(onPressed: (){
+              bool correctAnswer=reponse[questionnumber];
+              if(correctAnswer==true){
+                answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_up,color: Colors.green,),));
+              }else{
+                  answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_down,color: Colors.red,),));
+              }
               setState(() {
                questionnumber++;
               });
@@ -72,7 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),),
             Expanded(child: Padding(
             padding:const EdgeInsets.symmetric(vertical: 10),
-            child: ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(backgroundColor: Colors.red),child: const Text("Incorrect"))
+            child: ElevatedButton(onPressed: (){
+                 bool correctAnswer=reponse[questionnumber];
+              if(correctAnswer==false){
+                  answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_up,color: Colors.green,),));
+              }else{
+                  answerresult.add(const Padding(padding: EdgeInsets.all(3),child: Icon(Icons.thumb_down,color: Colors.red,),));
+              }
+            },style: ElevatedButton.styleFrom(backgroundColor: Colors.red),child: const Text("Incorrect"))
           ),)
         ],
       ),),
